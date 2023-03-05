@@ -7,7 +7,6 @@ except Exception:
     sys.exit()
 
 from django.conf import settings
-import uuid
 
 
 # Instructor model
@@ -48,8 +47,8 @@ class Learner(models.Model):
     social_link = models.URLField(max_length=200)
 
     def __str__(self):
-        return self.user.username + "," + \
-               self.occupation
+        # JCA Updated to be f-string.
+        return f'{self.user.username}, {self.occupation}'
 
 
 # Course model
@@ -64,8 +63,8 @@ class Course(models.Model):
     is_enrolled = False
 
     def __str__(self):
-        return "Name: " + self.name + "," + \
-               "Description: " + self.description
+        # JCA Updated to be f-string.
+        return f'Name: {self.name}, Description: {self.description}'
 
 
 # Lesson model
@@ -95,35 +94,43 @@ class Enrollment(models.Model):
     rating = models.FloatField(default=5.0)
 
 
-# <HINT> Create a Question Model with:
-    # Used to persist question content for a course
-    # Has a One-To-Many (or Many-To-Many if you want to reuse questions) relationship with course
-    # Has a grade point for each question
-    # Has question content
-    # Other fields and methods you would like to design
-#class Question(models.Model):
-    # Foreign key to lesson
-    # question text
-    # question grade/mark
+# JCA ------------
+class Question(models.Model):
+    """Model to track the questions in an exam for each course.
+    Note: 1 Question has multiple * Choice.
+    """
+    question_text = models.CharField(max_length=300)
+    question_value = models.IntegerField(default=1)  # 1 point per question default
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
 
-    # <HINT> A sample model method to calculate if learner get the score of the question
-    #def is_get_score(self, selected_ids):
-    #    all_answers = self.choice_set.filter(is_correct=True).count()
-    #    selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
-    #    if all_answers == selected_correct:
-    #        return True
-    #    else:
-    #        return False
+    def get_question_score(self, choices_selected: list = None) -> bool:
+        """This method will calculate the total score for the question based on user answers.
+        Full mark is only possible when all selections are correct. [No wrong answers]
+        :param choices_selected: list: Choices made by users.
+        :return bool: Correct (True), any wrong (False).
+        """
+        # Get correct answers for this question using backward relationship.
+        return True if self.choice_set.filter(is_correct=True).count() ==\
+                       self.choice_set.filter(is_correct=True, id__in=choices_selected).count() else False
+
+    def __str__(self):
+        """Default string when calling object"""
+        return f'{self.question_text} ({self.question_value} {"point" if self.question_value == 1 else "points"})'
 
 
-#  <HINT> Create a Choice Model with:
-    # Used to persist choice content for a question
-    # One-To-Many (or Many-To-Many if you want to reuse choices) relationship with Question
-    # Choice content
-    # Indicate if this choice of the question is a correct one or not
-    # Other fields and methods you would like to design
-# class Choice(models.Model):
+class Choice(models.Model):
+    """Store choices for questions."""
+    choice_text = models.CharField(max_length=200)
+    is_correct = models.BooleanField(default=False)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.choice_text
+
+
+class Submission(models.Model):
+    """WIP"""
+    pass
 # <HINT> The submission model
 # One enrollment could have multiple submission
 # One submission could have multiple choices

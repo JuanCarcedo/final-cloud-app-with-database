@@ -3,6 +3,11 @@
 {% block content %}
         <!-- Page content -->
     {% if course_list %}
+        {% if user.is_authenticated %}
+            <h1 class="text-center">Click "Enroll" to join a course</h1>
+        {% else %}
+            <h1 class="text-center">Log In to enroll into courses</h1>
+        {% endif %}
         <div class="container">
             <div class="card-deck">
                 {% for course in course_list %}

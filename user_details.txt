@@ -1,0 +1,13 @@
+User        Pass
+Admin:
+admin       admin
+
+Alumni:
+johnsmith   johnsmith
+elilian     elilian
+lilatuti    lilatuti
+TestUser    ?
+
+Staff:
+staff_A     staffpassword
+staff_B     staffpassword
