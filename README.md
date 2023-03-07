@@ -29,7 +29,7 @@ Directly from forked project.
 - I installed in my venv newer versions of the packages than the ones required.
 - Re-using html codes:
   - I changed all templates/html to use {% include 'HTML.html' %} and {% block content %} / {% endblock %}. I think this is a better way to "handle" all html files.
-- If a user is not authenticated, it will be possible to check the Course contents instead of seeing "Enrol" as option.
+- If a user is not authenticated, it will be possible to check the Course contents instead of seeing "Enroll" as option.
 - Minor bug fixed (suggested text is now relevant).
 
 ## Instructions
