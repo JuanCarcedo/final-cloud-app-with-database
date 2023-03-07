@@ -14,7 +14,7 @@
 ## IBM Skills Network - Intro to the project
 The starting point of this project can be found here [IBM Project](https://github.com/ibm-developer-skills-network/final-cloud-app-with-database). This is a fork.  
 The main point of this project is to replicate what I would do in a client/new project enhancing an app in Django.  
-The scope of this repository is to include an exam capability for the online courses; including:
+The scope of this repository is to include an exam capability for the online courses, including:
 + Questions with multiple choices (one or more correct).  
 + The user can see and take the exam only if it is enrolled in the course.
 + The user can submit as many exams as desired.
@@ -29,7 +29,7 @@ Directly from forked project.
 - I installed in my venv newer versions of the packages than the ones required.
 - Re-using html codes:
   - I changed all templates/html to use {% include 'HTML.html' %} and {% block content %} / {% endblock %}. I think this is a better way to "handle" all html files.
-- If a user is not authenticated, it will be possible to check the Course contents instead of seing "Enroll" as option.
+- If a user is not authenticated, it will be possible to check the Course contents instead of seeing "Enrol" as option.
 - Minor bug fixed (suggested text is now relevant).
 
 ## Instructions
