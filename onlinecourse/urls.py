@@ -12,5 +12,5 @@ urlpatterns = [
     path('<int:pk>/', views.CourseDetailView.as_view(), name='course_details'),
     path('<int:course_id>/enroll/', views.enroll, name='enroll'),
     path('<int:course_id>/submit/', views.submit_request, name='submit'),
-    path('<int:course_id>/examresult/', views.exam_result_view, name='exam_result'),
+    path('<int:course_id>/submission/<int:submission_id>/result/', views.exam_result_view, name='exam_result'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

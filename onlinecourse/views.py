@@ -117,13 +117,15 @@ def enroll(request, course_id):
 
 def submit_request(request, course_id):
     """Submit exam to a course."""
-    context = {}
     # Gather enrollment based on user and course
     course = get_object_or_404(Course, pk=course_id)
     user = request.user
+    enrollmment_data = Enrollment.objects.get(user=user, course=course)
 
     # Create submission object
-    # new_submission = Submission(enrollment=)
+    new_submission = Submission(enrollment=enrollmment_data)
+    new_submission.save()
+
     # Gather the answers in the form
     answers_by_user = []
     for items in request.POST:
@@ -134,24 +136,43 @@ def submit_request(request, course_id):
 
     # Add the choices to the submission
     for current_choice in answers_by_user:
-        # new_submission.choices.add(current_choice)  # Object of Choice
-        pass
-    # Save all
-    # new_submission.save()  # Save to db
-    # return redirect('onlinecourse:exam_result')
-    return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
+        new_submission.choices.add(current_choice)  # Object of Choice
 
-         # Get user and course object, then get the
-    # associated enrollment object created when the user enrolled the course
-         # Create a submission object referring to the enrollment
-         # Redirect to show_exam_result with the submission id
+    # Return to a proper view
+    return HttpResponseRedirect(reverse(viewname='onlinecourse:exam_result', args=(course.id, new_submission.id)))
 
-def exam_result_view(request, course_id):  # , submission_id):
-    # <HINT> Create an exam result view to check if learner passed exam and show their question results and result for each question,
-    # you may implement it based on the following logic:
-    # Get course and submission based on their ids
-    # Get the selected choice ids from the submission record
-    # For each selected choice, check if it is a correct answer or not
-    # Calculate the total score
-    context = {}
+
+def exam_result_view(request, course_id, submission_id):
+    """Create the exam result view."""
+    # Gather the course and the submission:
+    course = get_object_or_404(Course, pk=course_id)
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    # Security to prevent user seeing results from other users.
+    user_submission = submission.enrollment
+    if user_submission.user != request.user:
+        return HttpResponseRedirect(reverse(viewname='onlinecourse:index'))
+
+    total_grade: int = 0
+
+    # Get all choices IDs:
+    selected_choices: list = []
+    for choice in submission.choices.all():
+        selected_choices.append(choice.id)
+
+    # Iterate through the exam questions to see how many are correct
+    max_points_available: int = 0  # Used to store the maximum mark
+    points_achieved: int = 0  # Max points achieved
+    for question in course.question_set.all():
+        max_points_available += question.question_value
+        if question.get_question_score(selected_choices):
+            points_achieved += question.question_value
+
+    total_grade = int((points_achieved / max_points_available) * 100)
+
+    context = {
+        'course': course,
+        'selections': selected_choices,
+        'grade': total_grade,
+    }
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
