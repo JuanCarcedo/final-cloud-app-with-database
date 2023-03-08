@@ -94,7 +94,7 @@ class Enrollment(models.Model):
     rating = models.FloatField(default=5.0)
 
 
-# JCA ------------
+# 03/2023 JCA: New models included ------------
 class Question(models.Model):
     """Model to track the questions in an exam for each course.
     Note: 1 Question has multiple * Choice.

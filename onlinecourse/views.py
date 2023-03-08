@@ -130,7 +130,6 @@ def submit_request(request, course_id):
     answers_by_user = []
     for items in request.POST:
         if items.startswith('choice'):
-            # new_choice = get_object_or_404(Choice, pk=int(request.POST[items]))
             new_choice = Choice.objects.get(pk=int(request.POST[items]))
             answers_by_user.append(new_choice)
 

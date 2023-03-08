@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Course, Lesson, Instructor, Learner, Choice, Question
 
 
-# JCA included =============================
+# 03/2023 JCA included =============================
 class ChoiceInLine(admin.StackedInline):
     model = Choice
     extra = 4
@@ -35,6 +35,6 @@ admin.site.register(Course, CourseAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Instructor)
 admin.site.register(Learner)
-# JCA included
+# 03/2023 JCA included
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
