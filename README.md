@@ -1,5 +1,4 @@
 # Developing Applications with SQL, Databases, and Django
-# == WIP ==
 ## Index
 1) IBM Skills Network - Intro to the project
    1) Models Diagram
@@ -32,6 +31,8 @@ Directly from forked project.
   - I changed all templates/html to use {% include 'HTML.html' %} and {% block content %} / {% endblock %}. I think this is a better way to "handle" all html files.
 - If a user is not authenticated, it will be possible to check the Course contents instead of seeing "Enroll" as option.
 - Minor bug fixed (suggested text is now relevant).
+- Simple script insert prevention when creating a username.
+- Security policy included.
 
 ## Instructions
 ### How to install:  
