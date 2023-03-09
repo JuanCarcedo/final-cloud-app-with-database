@@ -1,13 +1,13 @@
 # Developing Applications with SQL, Databases, and Django
 ## Index
 1) IBM Skills Network - Intro to the project
-   1) Models Diagram
-   2) Changes from original forked version
+   1) Changes from original forked version
 2) Instructions
    1) How to install
    2) Version Updates
 3) Screenshots of working solution
-4) Author and Licence
+4) Models Diagram
+5) Author and Licence
 
 
 ## IBM Skills Network - Intro to the project
@@ -19,11 +19,6 @@ The scope of this repository is to include an exam capability for the online cou
 + The user can submit as many exams as desired.
 + The user will be able to check the correct answers and will receive a proper message once the exam is submitted (pass, failed).
 + Security to prevent a user to see other user's submission (using a URL).
-
-### Models Diagram
-Directly from forked project.
-
-![Onlinecoursemodels](https://github.com/JuanCarcedo/final-cloud-app-with-database/blob/master/static/media/course_images/onlinecourse_app_er.png)
 
 ### Changes from original forked version (not updates)
 - I installed in my venv newer versions of the packages than the ones required.
@@ -83,6 +78,11 @@ Exam detail showing the answers provided:
 - Not selected: Correct answer not selected.
 
 ![exam_details](readme_images/exam_detail.jpg)
+  
+### Models Diagram
+Directly from forked project.
+
+![Onlinecoursemodels](https://github.com/JuanCarcedo/final-cloud-app-with-database/blob/master/static/media/course_images/onlinecourse_app_er.png)
 
 ## Author and Licence
 This is a forked repository from IBM in March 2023:  
