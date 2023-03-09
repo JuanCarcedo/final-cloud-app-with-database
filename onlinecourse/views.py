@@ -19,6 +19,12 @@ def registration_request(request):
         # Check if user exists
         username = request.POST['username']
         password = request.POST['psw']
+
+        # 2023 JCA - Prevent script insertion.
+        if "<script>" in username.lower() or "<script>" in password.lower():
+            # Script in the input; prevent continue.
+            return render(request, 'onlinecourse/user_login_bootstrap.html', context)
+
         first_name = request.POST['firstname']
         last_name = request.POST['lastname']
         user_exist = False
@@ -42,6 +48,12 @@ def login_request(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['psw']
+
+        # 2023 JCA - Prevent script insertion.
+        if "<script>" in username.lower() or "<script>" in password.lower():
+            # Script in the input; prevent continue.
+            return render(request, 'onlinecourse/user_login_bootstrap.html', context)
+
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
